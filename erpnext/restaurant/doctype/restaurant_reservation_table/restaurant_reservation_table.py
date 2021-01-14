@@ -6,8 +6,5 @@ from __future__ import unicode_literals
 # import frappe
 from frappe.model.document import Document
 
-class Restaurant(Document):
-
-	def validate(self):
-		if not 0.5 <= (self.default_duration_of_stay.seconds // 3600) <= 6:
-			frappe.throw(_("Default duration of stay must be between 30 minutes and 6 hours."))
+class RestaurantReservationTable(Document):
+	pass

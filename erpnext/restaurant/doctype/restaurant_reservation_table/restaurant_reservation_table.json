@@ -1,0 +1,33 @@
+{
+ "actions": [],
+ "creation": "2021-01-06 23:43:20.553962",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "restaurant_table"
+ ],
+ "fields": [
+  {
+   "fieldname": "restaurant_table",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Restaurant Table",
+   "options": "Restaurant Table",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2021-01-06 23:43:20.553962",
+ "modified_by": "Administrator",
+ "module": "Restaurant",
+ "name": "Restaurant Reservation Table",
+ "owner": "Administrator",
+ "permissions": [],
+ "quick_entry": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

@@ -1,10 +1,11 @@
 frappe.views.calendar["Restaurant Reservation"] = {
 	field_map: {
-		"start": "reservation_time",
-		"end": "reservation_end_time",
+		"start": "start_time",
+		"end": "end_time",
 		"id": "name",
 		"title": "customer_name",
-		"allDay": "allDay",
+		"description": "assigned_tables",
+		//"allDay": "allDay",
 	},
 	gantt: true,
 	filters: [
