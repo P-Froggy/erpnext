@@ -5,65 +5,40 @@ frappe.ui.form.on('Restaurant Reservation', {
 	onload: function (frm) {
 		frm.set_query('assigned_tables', () => {
 			return {
-				query: 'erpnext.restaurant.doctype.restaurant_reservation.restaurant_reservation.free_tables_query',
+				//query: 'erpnext.restaurant.queries.free_tables_query',
 				filters: {
-					restaurant: frm.doc.restaurant
+					restaurant: frm.doc.restaurant,
+					min_seating: ['<=', frm.doc.no_of_people],
+					max_seating: ['>=', frm.doc.no_of_people]
+				}
+			}
+		});
+		frm.set_query('contact_person', () => {
+			if (frm.doc.customer) {
+				return {
+					query: 'frappe.contacts.doctype.contact.contact.contact_query',
+					filters: {
+						link_doctype: 'Customer',
+						link_name: frm.doc.customer
+					}
 				}
 			}
 		});
 	},
 	refresh: function (frm) {
-		frm.add_custom_button(__('Auto-Assign Tables'), () => {
-			frappe.prompt([
-				{
-					label: 'Restaurant',
-					fieldname: 'restaurant',
-					fieldtype: 'Link',
-					options: 'Restaurant',
-					reqd: 1
-				},
-				{
-					label: 'Start time',
-					fieldname: 'start_time',
-					fieldtype: 'Datetime',
-					reqd: 1
-				},
-				{
-					label: 'End time',
-					fieldname: 'end_time',
-					fieldtype: 'Datetime',
-					reqd: 1
-				},
-				{
-					label: 'Assign reservations',
-					fieldname: 'save',
-					fieldtype: 'Check',
-					default: 0
-				}
-			], (values) => {
-				frappe.call({
-					method: "erpnext.restaurant.doctype.restaurant_reservation.restaurant_reservation.assign_tables",
-					args: {
-						restaurant: values.restaurant,
-						start_time: values.start_time,
-						end_time: values.end_time,
-						save: values.save
-					},
-					freeze: true,
-					callback: function (r) {
+		if (frm.doc.assigned_tables.length === 0) {
+			frm.add_custom_button(__('Auto-Assign Table'), () => {
+				frm.call('assign_table', { save: false })
+					.then(r => {
 						if (r.message) {
-							frappe.msgprint({
-								title: __('Notification'),
-								indicator: 'green',
-								message: __(r.message)
-							});
+							//let linked_doc = r.message;
+							// do something with linked_doc
 						}
 						frm.reload_doc();
-					}
-				});
+					});
 
-			})
-		});
+			});
+		}
 
 	},
 	/*setup_queries: function(doc, cdt, cdn) {

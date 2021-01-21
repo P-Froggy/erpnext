@@ -13,7 +13,11 @@
   "company",
   "address",
   "reservation_defaults_section",
-  "default_duration_of_stay"
+  "default_duration_of_stay",
+  "enable_online_reservations",
+  "online_reservation_settings_section",
+  "acceptance_email_template",
+  "rejection_email_template"
  ],
  "fields": [
   {
@@ -54,12 +58,38 @@
    "hide_seconds": 1,
    "label": "Default duration of stay",
    "reqd": 1
+  },
+  {
+   "depends_on": "eval:doc.enable_online_reservations;",
+   "fieldname": "online_reservation_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Online Reservation Settings"
+  },
+  {
+   "fieldname": "acceptance_email_template",
+   "fieldtype": "Link",
+   "label": "Acceptance Email Template",
+   "options": "Email Template",
+   "reqd": 1
+  },
+  {
+   "fieldname": "rejection_email_template",
+   "fieldtype": "Link",
+   "label": "Rejection Email Template",
+   "options": "Email Template",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "enable_online_reservations",
+   "fieldtype": "Check",
+   "label": "Enable Online Reservations"
   }
  ],
  "image_field": "image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-01-14 01:44:53.609035",
+ "modified": "2021-01-19 00:45:48.372544",
  "modified_by": "Administrator",
  "module": "Restaurant",
  "name": "Restaurant",

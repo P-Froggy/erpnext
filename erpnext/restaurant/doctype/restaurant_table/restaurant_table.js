@@ -2,6 +2,17 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Restaurant Table', {
+	onload: function(frm) {
+		frm.set_query('table_combinations', () => {
+			return {
+				filters: {
+					restaurant: frm.doc.restaurant,
+					type: ['in', ['Standard', 'Reserve']]
+				}
+			}
+		})
+	},
+
 	refresh: function (frm) {
 
 		frm.add_custom_button(__('Change Restaurant / Table'), () => {

@@ -18,7 +18,10 @@
   "customer_section",
   "customer",
   "customer_name",
-  "contact_number",
+  "column_break_11",
+  "contact_person",
+  "contact_phone",
+  "contact_email",
   "section_break_13",
   "assigned_tables",
   "miscellaneous_section",
@@ -54,10 +57,12 @@
   {
    "fieldname": "customer",
    "fieldtype": "Link",
+   "in_standard_filter": 1,
    "label": "Customer",
    "options": "Customer"
   },
   {
+   "fetch_from": "customer.customer_name",
    "fieldname": "customer_name",
    "fieldtype": "Data",
    "in_global_search": 1,
@@ -65,12 +70,6 @@
    "in_standard_filter": 1,
    "label": "Customer Name",
    "reqd": 1
-  },
-  {
-   "fieldname": "contact_number",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Contact Number"
   },
   {
    "allow_on_submit": 1,
@@ -101,15 +100,13 @@
    "fieldname": "start_time",
    "fieldtype": "Datetime",
    "in_list_view": 1,
-   "in_standard_filter": 1,
    "label": "Start Time",
    "reqd": 1
   },
   {
    "fieldname": "end_time",
    "fieldtype": "Datetime",
-   "label": "End Time",
-   "reqd": 1
+   "label": "End Time"
   },
   {
    "fieldname": "amended_from",
@@ -124,12 +121,35 @@
    "fieldname": "miscellaneous_section",
    "fieldtype": "Section Break",
    "label": "Miscellaneous"
+  },
+  {
+   "fieldname": "contact_person",
+   "fieldtype": "Link",
+   "label": "Contact Person",
+   "options": "Contact"
+  },
+  {
+   "fetch_from": "contact_person.mobile_no",
+   "fieldname": "contact_phone",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Contact Phone"
+  },
+  {
+   "fetch_from": "contact_person.email_id",
+   "fieldname": "contact_email",
+   "fieldtype": "Data",
+   "label": "Contact Email"
+  },
+  {
+   "fieldname": "column_break_11",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-01-14 02:14:33.790118",
+ "modified": "2021-01-19 22:53:00.131238",
  "modified_by": "Administrator",
  "module": "Restaurant",
  "name": "Restaurant Reservation",
@@ -148,7 +168,6 @@
    "write": 1
   }
  ],
- "quick_entry": 1,
  "restrict_to_domain": "Hospitality",
  "sort_field": "modified",
  "sort_order": "DESC",
