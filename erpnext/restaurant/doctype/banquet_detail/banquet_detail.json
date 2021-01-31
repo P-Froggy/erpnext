@@ -1,0 +1,145 @@
+{
+ "actions": [],
+ "creation": "2021-01-21 10:22:55.928377",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "type_and_links_section",
+  "type",
+  "column_break_2",
+  "linked_doc",
+  "description_section",
+  "title",
+  "description",
+  "schedule_information_section",
+  "start_time",
+  "column_break_6",
+  "end_time",
+  "price_information_section",
+  "qty",
+  "uom",
+  "column_break_15",
+  "rate",
+  "amount",
+  "qty_by_consumption"
+ ],
+ "fields": [
+  {
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Type",
+   "options": "Item\nRestaurant Reservation\nHotel Reservation\nResource Reservation\nNote\nSection Break",
+   "reqd": 1
+  },
+  {
+   "depends_on": "eval:['Item','Restaurant Reservation'].includes(doc.type);",
+   "fieldname": "linked_doc",
+   "fieldtype": "Dynamic Link",
+   "label": "Linked Document",
+   "mandatory_depends_on": "eval:['Item','Restaurant Reservation'].includes(doc.type);",
+   "options": "type",
+   "read_only_depends_on": "eval:['Note','Section Break'].includes(doc.type);"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "in_list_view": 1,
+   "label": "Description"
+  },
+  {
+   "fieldname": "schedule_information_section",
+   "fieldtype": "Section Break",
+   "label": "Schedule Information"
+  },
+  {
+   "fieldname": "start_time",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Start Time",
+   "read_only_depends_on": "eval:doc.type=='Section Break';",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "end_time",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "End Time",
+   "read_only_depends_on": "eval:doc.type=='Section Break';",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "description_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Title"
+  },
+  {
+   "depends_on": "eval:doc.type=='Item';",
+   "fieldname": "price_information_section",
+   "fieldtype": "Section Break",
+   "label": "Price Information"
+  },
+  {
+   "fieldname": "type_and_links_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "qty",
+   "fieldtype": "Float",
+   "label": "Quantity"
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Currency",
+   "label": "Rate",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Amount",
+   "options": "Currency"
+  },
+  {
+   "fieldname": "uom",
+   "fieldtype": "Link",
+   "label": "UOM",
+   "options": "UOM"
+  },
+  {
+   "fieldname": "column_break_15",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "qty_by_consumption",
+   "fieldtype": "Check",
+   "label": "Quantity according to consumption"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2021-01-23 02:16:52.419496",
+ "modified_by": "Administrator",
+ "module": "Restaurant",
+ "name": "Banquet Detail",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

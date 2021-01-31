@@ -1,0 +1,276 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2021-01-21 10:18:39.883884",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "organizer_information_section",
+  "naming_series",
+  "banquet_type",
+  "customer",
+  "customer_name",
+  "column_break_5",
+  "company",
+  "currency",
+  "status",
+  "amended_from",
+  "address_and_contact_section",
+  "customer_contact",
+  "contact_display",
+  "column_break_11",
+  "customer_address",
+  "address_display",
+  "event_schedule_information_section",
+  "start_date",
+  "column_break_10",
+  "end_date",
+  "column_break_20",
+  "option_date",
+  "participant_information_section",
+  "pax",
+  "banquet_details_section",
+  "import_from_template_button",
+  "banquet_details",
+  "totals_section",
+  "rounded_total",
+  "terms_and_conditions_section",
+  "terms_and_conditions_name",
+  "terms_and_conditions"
+ ],
+ "fields": [
+  {
+   "fieldname": "organizer_information_section",
+   "fieldtype": "Section Break",
+   "label": "Organizer Information"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "RES-BQT-.YYYY.-",
+   "reqd": 1
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Customer",
+   "options": "Customer",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "customer.customer_name",
+   "fieldname": "customer_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Customer Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Company",
+   "options": "Company",
+   "remember_last_selected_value": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "participant_information_section",
+   "fieldtype": "Section Break",
+   "label": "Participant Information"
+  },
+  {
+   "fieldname": "pax",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Pax",
+   "reqd": 1
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Banquet",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "banquet_details_section",
+   "fieldtype": "Section Break",
+   "label": "Banquet Details"
+  },
+  {
+   "fieldname": "banquet_details",
+   "fieldtype": "Table",
+   "label": "Banquet Details",
+   "options": "Banquet Detail"
+  },
+  {
+   "fieldname": "event_schedule_information_section",
+   "fieldtype": "Section Break",
+   "label": "Event Schedule Information"
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Start Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_10",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "End Date",
+   "reqd": 1
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "address_and_contact_section",
+   "fieldtype": "Section Break",
+   "label": "Address and Contact"
+  },
+  {
+   "fieldname": "customer_contact",
+   "fieldtype": "Link",
+   "label": "Customer Contact",
+   "options": "Contact",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_11",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "customer_address",
+   "fieldtype": "Link",
+   "label": "Customer Address",
+   "options": "Address",
+   "reqd": 1
+  },
+  {
+   "fieldname": "terms_and_conditions_section",
+   "fieldtype": "Section Break",
+   "label": "Terms and Conditions"
+  },
+  {
+   "fieldname": "terms_and_conditions_name",
+   "fieldtype": "Link",
+   "label": "Terms and Conditions",
+   "options": "Terms and Conditions"
+  },
+  {
+   "fieldname": "terms_and_conditions",
+   "fieldtype": "Text Editor",
+   "label": "Terms and Conditions Details"
+  },
+  {
+   "fieldname": "contact_display",
+   "fieldtype": "Small Text",
+   "label": "Contact Information",
+   "read_only": 1
+  },
+  {
+   "fieldname": "address_display",
+   "fieldtype": "Small Text",
+   "label": "Address",
+   "read_only": 1
+  },
+  {
+   "default": "Option",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "\nDraft\nOption\nConfirmed\nCompleted\nLost\nCancelled",
+   "reqd": 1
+  },
+  {
+   "fieldname": "option_date",
+   "fieldtype": "Date",
+   "label": "Option Date"
+  },
+  {
+   "fieldname": "totals_section",
+   "fieldtype": "Section Break",
+   "label": "Totals"
+  },
+  {
+   "fieldname": "rounded_total",
+   "fieldtype": "Currency",
+   "label": "Rounded Total",
+   "options": "Currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "import_from_template_button",
+   "fieldtype": "Button",
+   "label": "Import from Template",
+   "print_hide": 1
+  },
+  {
+   "fieldname": "column_break_20",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "banquet_type",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Banquet Type",
+   "options": "Banquet Type",
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [
+  {
+   "link_doctype": "Restaurant Reservation",
+   "link_fieldname": "banquet"
+  }
+ ],
+ "modified": "2021-01-23 03:14:47.967946",
+ "modified_by": "Administrator",
+ "module": "Restaurant",
+ "name": "Banquet",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

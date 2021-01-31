@@ -4,9 +4,11 @@ frappe.listview_settings['Restaurant Reservation'] = {
         "communication_medium", "communication_type",
         "sender", "seen", "reference_doctype", "reference_name",
         "has_attachment", "communication_date"
-    ],
+    ],*/
 
-    filters: [["status", "=", "Open"]],*/
+    filters: [
+        ["start_time", ">=", frappe.datetime.nowdate()]
+    ],
 
     get_indicator: function (doc) {
         if (doc.docstatus === 0) {
@@ -32,7 +34,7 @@ frappe.listview_settings['Restaurant Reservation'] = {
     onload: function (listview) {
 
         // .add_menu_item
-        listview.page.add_inner_button(__("Check availability"), () => {
+        listview.page.add_inner_button(__("Reservation Assistant"), () => {
             frappe.prompt([
                 {
                     label: 'Restaurant',

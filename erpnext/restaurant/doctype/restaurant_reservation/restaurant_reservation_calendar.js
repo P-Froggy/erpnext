@@ -5,7 +5,7 @@ frappe.views.calendar["Restaurant Reservation"] = {
 		"id": "name",
 		"title": "customer_name",
 		"description": "assigned_tables",
-		//"allDay": "allDay",
+		"allDay": "allDay",
 	},
 	gantt: true,
 	filters: [
@@ -15,5 +15,5 @@ frappe.views.calendar["Restaurant Reservation"] = {
 			"label": __("Customer Name")
 		}
 	],
-	get_events_method: "frappe.desk.calendar.get_events"
+	//get_events_method: "frappe.desk.calendar.get_events"
 };

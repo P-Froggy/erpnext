@@ -11,31 +11,34 @@
   "reservation_details_section",
   "status",
   "restaurant",
+  "column_break_5",
   "start_time",
   "end_time",
-  "column_break_5",
-  "no_of_people",
+  "references_section",
+  "banquet",
   "customer_section",
   "customer",
   "customer_name",
+  "no_of_people",
   "column_break_11",
   "contact_person",
   "contact_phone",
   "contact_email",
-  "section_break_13",
+  "assigned_tables_section",
   "assigned_tables",
   "miscellaneous_section",
   "amended_from"
  ],
  "fields": [
   {
+   "allow_on_submit": 1,
    "fieldname": "status",
    "fieldtype": "Select",
    "hidden": 1,
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Status",
-   "options": "Open\nAccepted\nRejected\nWaitlisted\nCancelled\nNo Show\nCompleted"
+   "options": "Open\nAccepted\nWaitlisted\nRejected\nNo Show\nSeated\nCompleted\nCancelled"
   },
   {
    "fieldname": "restaurant",
@@ -73,6 +76,7 @@
   },
   {
    "allow_on_submit": 1,
+   "depends_on": "eval:doc.status=='Accepted';",
    "fieldname": "assigned_tables",
    "fieldtype": "Table MultiSelect",
    "label": "Assigned Tables",
@@ -91,10 +95,6 @@
    "fieldname": "customer_section",
    "fieldtype": "Section Break",
    "label": "Customer"
-  },
-  {
-   "fieldname": "section_break_13",
-   "fieldtype": "Section Break"
   },
   {
    "fieldname": "start_time",
@@ -144,12 +144,28 @@
   {
    "fieldname": "column_break_11",
    "fieldtype": "Column Break"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "references_section",
+   "fieldtype": "Section Break",
+   "label": "References"
+  },
+  {
+   "fieldname": "banquet",
+   "fieldtype": "Link",
+   "label": "Banquet",
+   "options": "Banquet"
+  },
+  {
+   "fieldname": "assigned_tables_section",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-01-19 22:53:00.131238",
+ "modified": "2021-01-25 00:13:42.373149",
  "modified_by": "Administrator",
  "module": "Restaurant",
  "name": "Restaurant Reservation",

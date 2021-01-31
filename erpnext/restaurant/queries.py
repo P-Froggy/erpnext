@@ -74,6 +74,7 @@ def reservations_query(restaurant, start_time, end_time):
 
 		WHERE
 			res.docstatus = 1
+			AND res.status NOT IN ('Rejected', 'NoShow', 'Completed', 'Cancelled')
 			AND res.restaurant = %(restaurant)s
 			AND res.start_time <= %(end_time)s
 			AND res.end_time >= %(start_time)s
@@ -87,6 +88,7 @@ def reservations_query(restaurant, start_time, end_time):
 		}, as_dict=True)
 
 
+# Depreciated, delete if possible
 @frappe.whitelist()
 @frappe.validate_and_sanitize_search_inputs
 def free_tables_query(doctype, txt, searchfield, start, page_len, filters, as_dict=False):

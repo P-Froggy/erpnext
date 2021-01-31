@@ -10,7 +10,7 @@ frappe.ui.form.on('Restaurant Table', {
 					type: ['in', ['Standard', 'Reserve']]
 				}
 			}
-		})
+		});
 	},
 
 	refresh: function (frm) {

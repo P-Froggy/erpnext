@@ -14,11 +14,13 @@ from erpnext.restaurant.queries import tables_query, reservations_query
 
 class RestaurantReservation(Document):
 	def validate(self):
-		self.validate_reservation()
+		self.__validate_reservation()
 		
-	def validate_reservation(self):
+	def __validate_reservation(self):
 		if self.end_time is not None and not 0.5 <= time_diff_in_hours(self.end_time, self.start_time) < 12:
 			frappe.throw(_("Reservations must have a duration of stay between 30 minutes and 12 hours."))
+		if self.status in ['Open', 'Waitlisted', 'Rejected'] and len(self.assigned_tables) > 0:
+			frappe.throw(_("Waitlisted or rejected reservations can't have assigned tables."))
 
 	def before_save(self):
 		if not self.end_time:
@@ -51,6 +53,26 @@ class RestaurantReservation(Document):
 				title=_('Not assigned'),
 				indicator='red'
 			)
+	
+	@frappe.whitelist()
+	def assign_table2(self, save=False):
+		"""Assign a single reservation to the best fitting table.
+
+		:param reservation: The reservation which should be assigned
+		"""
+		# Allocate reservations to tables
+		reservations, waiting_list = assign_tables2(self.restaurant, self.start_time, self.end_time)
+		reservation = next((x for x in reservations if x.name == self.name), None)
+		if reservation:
+			if save:
+				self.append("assigned_tables", {"restaurant_table": reservation.restaurant_table})
+				self.save(ignore_version=True)
+				self.add_comment('Label', _("assigned table {} through auto-assignment").format(frappe.bold(reservation.restaurant_table)))
+				
+			return _("Reservation assigned to {0}.").format(reservation.restaurant_table)
+		else:
+			return _("The reservation could not be assigned to any table.")
+
 
 @frappe.whitelist()
 def assign_tables(restaurant, start_time, end_time, save=False):
@@ -269,7 +291,7 @@ def get_table_allocations(restaurant, db_tables, db_reservations):
 		# Already assigned reservations have absolute priority
 		(999 if x.assigned_tables is not None else 0) + \
 		# Prioritize reservations that are already answered
-		(2 if x.status == 'Accepted' else 1 if x.status == 'Waiting List' else 0) * 10 + \
+		(2 if x.status == 'Accepted' else 1 if x.status == 'Waitlisted' else 0) * 10 + \
 		# Prioritize larger reservations
 		x.no_of_people * 1 + \
 		# Prioritize longer reservations

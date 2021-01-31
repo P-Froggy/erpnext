@@ -5,11 +5,14 @@
 from __future__ import unicode_literals
 import frappe, re
 from frappe.model.document import Document
+from frappe import _
 
 class RestaurantTable(Document):
 	def validate(self):
 		if self.max_seating < self.min_seating:
-			frappe.throw(_("Maximum seating has to be equal are larger than minimum seating."))	
+			frappe.throw(_("Maximum seating has to be equal are larger than minimum seating."))
+		if self.type == 'Combined' and not len(self.table_combinations) >= 2:
+			frappe.throw(_("Combined tables must consist of at least two other tables."))
 
 	def autoname(self):
 		prefix = re.sub('-+', '-', self.restaurant.replace(' ', '-'))
