@@ -34,9 +34,12 @@ frappe.ui.form.on('Restaurant Reservation', {
 		});
 	},
 	refresh: function (frm) {
-		if (frm.doc.status == 'Accepted' && frm.doc.assigned_tables.length == 0) {
+		//if (frm.doc.status == 'Accepted' && frm.doc.assigned_tables.length == 0) {
+		if (['Open', 'Accepted', 'Waitlisted'].includes(frm.doc.status) && frm.doc.assigned_tables.length == 0) {
 			frm.add_custom_button(__('Auto-Assign Table'), () => {
-				frm.call('assign_table', { save: false })
+				frm.call('assign_table', {
+					save: true
+				})
 					.then(r => {
 						if (r.message) {
 							//let linked_doc = r.message;
@@ -45,7 +48,21 @@ frappe.ui.form.on('Restaurant Reservation', {
 						frm.reload_doc();
 					});
 
-			});
+			}, __("Restaurant Table"));
+
+			frm.add_custom_button(__('Check Availability'), () => {
+				frm.call('assign_table', {
+					save: false
+				})
+					.then(r => {
+						if (r.message) {
+							//let linked_doc = r.message;
+							// do something with linked_doc
+						}
+						//frm.reload_doc();
+					});
+
+			}, __("Restaurant Table"));
 		}
 
 		// New Status Buttons
@@ -73,50 +90,13 @@ frappe.ui.form.on('Restaurant Reservation', {
 				});
 			}, __('Status'));
 		}
-
-		if (frm.doc.status == 'Open' || frm.doc.status == 'Waitlisted') {
-			frm.add_custom_button(__('Change Status'), () => {
-				frm.call('assign_table2', { save: false })
-				.then(r => {
-					if (r.message) {
-						frappe.prompt([
-							{
-								fieldtype: 'HTML',
-								options: r.message
-							},
-							{
-								label: 'Action',
-								fieldname: 'action',
-								fieldtype: 'Select',
-								options: frm.doc.status == 'Open' ? 'Accept\nWaitlist\nReject' : 'Accept\nReject',
-								reqd: 1
-							},
-							{
-								label: __('Options'),
-								fieldtype: 'Section Break'
-							},
-							{
-								label: 'Assign Table',
-								fieldname: 'assign_table',
-								fieldtype: 'Check',
-								read_only_depends_on: 'eval:doc.action != "Accept";'
-							},
-							{
-								label: 'Send confirmation email',
-								fieldname: 'send_email',
-								fieldtype: 'Check',
-								read_only: frm.doc.contact_email == null
-							},					
-						], (values) => {
-							console.log(values.first_name, values.last_name);
-						})
-					}
-					frm.reload_doc();
-				});
+		// Next Document
+		if (frm.doc.status == 'Accepted' /*|| frappe.datetime.get_diff(frappe.datetime.nowdate(), frm.doc.start_time) == 0*/) {
+			frm.add_custom_button(__('Restaurant Stay'), () => {
 				// Do something
-			});
-		}
 
+			}, __('Create'));
+		}
 
 	},
 	/*setup_queries: function(doc, cdt, cdn) {

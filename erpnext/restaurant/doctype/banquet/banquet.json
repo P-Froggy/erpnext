@@ -5,12 +5,14 @@
  "autoname": "naming_series:",
  "creation": "2021-01-21 10:18:39.883884",
  "doctype": "DocType",
+ "document_type": "Document",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
   "organizer_information_section",
   "naming_series",
   "banquet_type",
+  "column_break_4",
   "customer",
   "customer_name",
   "column_break_5",
@@ -32,11 +34,28 @@
   "option_date",
   "participant_information_section",
   "pax",
+  "column_break_26",
+  "on_site_contact",
   "banquet_details_section",
   "import_from_template_button",
   "banquet_details",
+  "sales_taxes_charges_section",
+  "sales_taxes_and_charges_template",
+  "taxes",
+  "tax_totals_section",
+  "base_total_taxes_and_charges",
+  "column_break_34",
+  "total_taxes_and_charges",
   "totals_section",
+  "base_grand_total",
+  "base_rounding_adjustment",
+  "base_rounded_total",
+  "base_in_words",
+  "column_break_41",
+  "grand_total",
+  "rounding_adjustment",
   "rounded_total",
+  "in_words",
   "terms_and_conditions_section",
   "terms_and_conditions_name",
   "terms_and_conditions"
@@ -221,7 +240,7 @@
    "fieldname": "rounded_total",
    "fieldtype": "Currency",
    "label": "Rounded Total",
-   "options": "Currency",
+   "options": "currency",
    "read_only": 1
   },
   {
@@ -241,6 +260,116 @@
    "label": "Banquet Type",
    "options": "Banquet Type",
    "reqd": 1
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sales_taxes_charges_section",
+   "fieldtype": "Section Break",
+   "label": "Sales Taxes and Charges"
+  },
+  {
+   "fieldname": "sales_taxes_and_charges_template",
+   "fieldtype": "Link",
+   "label": "Sales Taxes and Charges Template",
+   "options": "Sales Taxes and Charges Template"
+  },
+  {
+   "fieldname": "taxes",
+   "fieldtype": "Table",
+   "label": "Sales Taxes and Charges",
+   "options": "Sales Taxes and Charges"
+  },
+  {
+   "fieldname": "base_grand_total",
+   "fieldtype": "Currency",
+   "label": "Grand Total (Company Currency)",
+   "options": "Company:company:default_currency",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_34",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "grand_total",
+   "fieldtype": "Currency",
+   "label": "Grand Total",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "rounding_adjustment",
+   "fieldtype": "Currency",
+   "label": "Rounding Adjustment",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "in_words",
+   "fieldtype": "Data",
+   "label": "In Words",
+   "read_only": 1
+  },
+  {
+   "fieldname": "base_rounding_adjustment",
+   "fieldtype": "Currency",
+   "label": "Rounding Adjustment (Company Currency)",
+   "options": "Company:company:default_currency",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "base_rounded_total",
+   "fieldtype": "Currency",
+   "label": "Rounded Total (Company Currency)",
+   "options": "Company:company:default_currency",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "base_in_words",
+   "fieldtype": "Data",
+   "label": "In Words (Company Currency)",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "tax_totals_section",
+   "fieldtype": "Section Break",
+   "label": "Total Taxes and Charges"
+  },
+  {
+   "fieldname": "base_total_taxes_and_charges",
+   "fieldtype": "Currency",
+   "label": "Total Taxes and Charges (Company Currency)",
+   "options": "Company:company:default_currency",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_taxes_and_charges",
+   "fieldtype": "Currency",
+   "label": "Total Taxes and Charges",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_41",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_26",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "on_site_contact",
+   "fieldtype": "Link",
+   "label": "On-Site Contact",
+   "options": "Contact"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -251,7 +380,7 @@
    "link_fieldname": "banquet"
   }
  ],
- "modified": "2021-01-23 03:14:47.967946",
+ "modified": "2021-02-17 15:34:24.520464",
  "modified_by": "Administrator",
  "module": "Restaurant",
  "name": "Banquet",

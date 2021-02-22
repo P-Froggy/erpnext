@@ -1,10 +1,11 @@
 {
  "actions": [],
+ "allow_import": 1,
  "autoname": "RES-RES-.YYYY.-.#####",
  "beta": 1,
  "creation": "2017-09-15 13:05:51.063661",
  "doctype": "DocType",
- "document_type": "Setup",
+ "document_type": "Document",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
@@ -13,10 +14,11 @@
   "restaurant",
   "column_break_5",
   "start_time",
+  "column_break_6",
   "end_time",
   "references_section",
   "banquet",
-  "customer_section",
+  "customer_details_section",
   "customer",
   "customer_name",
   "no_of_people",
@@ -38,7 +40,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Status",
-   "options": "Open\nAccepted\nWaitlisted\nRejected\nNo Show\nSeated\nCompleted\nCancelled"
+   "options": "Draft\nOpen\nAccepted\nWaitlisted\nRejected\nNo Show\nSeated\nCompleted\nCancelled"
   },
   {
    "fieldname": "restaurant",
@@ -49,7 +51,6 @@
    "reqd": 1
   },
   {
-   "allow_on_submit": 1,
    "fieldname": "no_of_people",
    "fieldtype": "Int",
    "in_list_view": 1,
@@ -68,8 +69,6 @@
    "fetch_from": "customer.customer_name",
    "fieldname": "customer_name",
    "fieldtype": "Data",
-   "in_global_search": 1,
-   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Customer Name",
    "reqd": 1
@@ -92,11 +91,7 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "customer_section",
-   "fieldtype": "Section Break",
-   "label": "Customer"
-  },
-  {
+   "bold": 1,
    "fieldname": "start_time",
    "fieldtype": "Datetime",
    "in_list_view": 1,
@@ -132,7 +127,6 @@
    "fetch_from": "contact_person.mobile_no",
    "fieldname": "contact_phone",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "label": "Contact Phone"
   },
   {
@@ -160,12 +154,26 @@
   {
    "fieldname": "assigned_tables_section",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_6",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "customer_details_section",
+   "fieldtype": "Section Break",
+   "label": "Customer Details"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
- "links": [],
- "modified": "2021-01-25 00:13:42.373149",
+ "links": [
+  {
+   "link_doctype": "Restaurant Stay",
+   "link_fieldname": "restaurant_reservation"
+  }
+ ],
+ "modified": "2021-02-17 03:08:13.780153",
  "modified_by": "Administrator",
  "module": "Restaurant",
  "name": "Restaurant Reservation",
@@ -187,5 +195,6 @@
  "restrict_to_domain": "Hospitality",
  "sort_field": "modified",
  "sort_order": "DESC",
+ "title_field": "customer_name",
  "track_changes": 1
 }

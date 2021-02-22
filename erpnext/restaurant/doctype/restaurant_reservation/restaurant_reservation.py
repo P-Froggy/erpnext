@@ -15,17 +15,33 @@ from erpnext.restaurant.queries import tables_query, reservations_query
 class RestaurantReservation(Document):
 	def validate(self):
 		self.__validate_reservation()
+		self.__validate_assigned_tables()
 		
 	def __validate_reservation(self):
 		if self.end_time is not None and not 0.5 <= time_diff_in_hours(self.end_time, self.start_time) < 12:
 			frappe.throw(_("Reservations must have a duration of stay between 30 minutes and 12 hours."))
 		if self.status in ['Open', 'Waitlisted', 'Rejected'] and len(self.assigned_tables) > 0:
 			frappe.throw(_("Waitlisted or rejected reservations can't have assigned tables."))
+	
+	def __validate_assigned_tables(self):
+		pass
 
 	def before_save(self):
 		if not self.end_time:
 			restaurant = frappe.get_doc('Restaurant', self.restaurant)
 			self.end_time = add_to_date(self.start_time, seconds=restaurant.default_duration_of_stay)
+		
+		self.__update_status()
+
+	def __update_status(self):
+		# Finish status update
+		if self.docstatus == 0:
+			self.status = 'Draft'
+		elif self.docstatus == 1:
+			pass
+		elif self.docstatus == 2:
+			self.status = 'Cancelled'
+			
 
 	@frappe.whitelist()
 	def assign_table(self, save=False):
@@ -38,40 +54,27 @@ class RestaurantReservation(Document):
 		reservation = next((x for x in reservations if x.name == self.name), None)
 		if reservation:
 			if save:
+				self.status = 'Accepted'
 				self.append("assigned_tables", {"restaurant_table": reservation.restaurant_table})
 				self.save(ignore_version=True)
 				self.add_comment('Label', _("assigned table {} through auto-assignment").format(frappe.bold(reservation.restaurant_table)))
-				
-			frappe.msgprint(
-				msg=_("Reservation assigned to {0}.").format(reservation.restaurant_table),
-				title='Reservation assigned',
-				indicator='green'
-			)
+				frappe.msgprint(
+					msg=_("Reservation assigned to {0}.").format(reservation.restaurant_table),
+					title='Reservation assigned',
+					indicator='green'
+				)
+			else:				
+				frappe.msgprint(
+					msg=_("Reservation can be assigned to {0}.").format(reservation.restaurant_table),
+					title='Reservation assigned',
+					indicator='green'
+				)
 		else:
 			frappe.msgprint(
-				msg=_("The reservation could not be assigned to any table."),
+				msg=_("The reservation cannot be assigned to any table."),
 				title=_('Not assigned'),
 				indicator='red'
 			)
-	
-	@frappe.whitelist()
-	def assign_table2(self, save=False):
-		"""Assign a single reservation to the best fitting table.
-
-		:param reservation: The reservation which should be assigned
-		"""
-		# Allocate reservations to tables
-		reservations, waiting_list = assign_tables2(self.restaurant, self.start_time, self.end_time)
-		reservation = next((x for x in reservations if x.name == self.name), None)
-		if reservation:
-			if save:
-				self.append("assigned_tables", {"restaurant_table": reservation.restaurant_table})
-				self.save(ignore_version=True)
-				self.add_comment('Label', _("assigned table {} through auto-assignment").format(frappe.bold(reservation.restaurant_table)))
-				
-			return _("Reservation assigned to {0}.").format(reservation.restaurant_table)
-		else:
-			return _("The reservation could not be assigned to any table.")
 
 
 @frappe.whitelist()
@@ -98,7 +101,7 @@ def assign_tables(restaurant, start_time, end_time, save=False):
 		# Change status for waitlisted reservations
 		for reservation in waiting_list:
 			doc = frappe.get_doc('Restaurant Reservation', reservation.name)
-			doc.status = 'Waiting List'
+			doc.status = 'Waitlisted'
 			doc.save(ignore_permissions=True)
 
 	if len(reservations) > 0:

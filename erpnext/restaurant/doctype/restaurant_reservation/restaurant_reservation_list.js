@@ -1,14 +1,14 @@
 frappe.listview_settings['Restaurant Reservation'] = {
     /*add_fields: [
-        "sent_or_received", "recipients", "subject",
-        "communication_medium", "communication_type",
-        "sender", "seen", "reference_doctype", "reference_name",
-        "has_attachment", "communication_date"
+        "start_time"
     ],*/
 
     filters: [
         ["start_time", ">=", frappe.datetime.nowdate()]
     ],
+
+    //hide_name_column: true,
+    order_by: "start_time",
 
     get_indicator: function (doc) {
         if (doc.docstatus === 0) {

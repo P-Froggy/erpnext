@@ -5,6 +5,7 @@
  "autoname": "Prompt",
  "creation": "2021-01-22 01:39:02.837328",
  "doctype": "DocType",
+ "document_type": "Setup",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
@@ -29,7 +30,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-01-23 02:32:17.822351",
+ "modified": "2021-02-02 23:47:31.105296",
  "modified_by": "Administrator",
  "module": "Restaurant",
  "name": "Banquet Template",

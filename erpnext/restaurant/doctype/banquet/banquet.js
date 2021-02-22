@@ -22,6 +22,8 @@ frappe.ui.form.on('Banquet', {
 			erpnext.utils.copy_value_in_all_rows(frm.doc, frm.doc.doctype, frm.doc.name, "banquet_details", "end_time");
 		}
 	},*/
+
+
 	import_from_template_button: function (frm) {
 		new frappe.ui.form.MultiSelectDialog({
 			doctype: "Banquet Template",
@@ -43,13 +45,27 @@ frappe.ui.form.on('Banquet', {
 		});
 		//this.dialog.show();
 	}
+
 });
 
 frappe.ui.form.on('Banquet Detail', {
+	/*banquet_details_add(frm, cdt, cdn) {
+		//let row = frappe.get_doc(cdt, cdn);
+		let row = locals[cdt][cdn];
+		if (row.type != 'Section Break' && frm.doc.start_date) {
+			frappe.model.set_value(cdt, cdn, {
+				start_time: frappe.datetime.get_datetime_as_string(frm.doc.start_date),
+				end_time: frappe.datetime.get_datetime_as_string(frm.doc.start_date)
+			});
+		}
+	},*/
+
 	type: function (frm, cdt, cdn) {
 		let row = locals[cdt][cdn];
 		frappe.model.set_value(cdt, cdn, {
 			linked_doc: null,
+			//start_time: null,
+			//end_time: null,
 			uom: null
 		});
 	},
@@ -57,14 +73,26 @@ frappe.ui.form.on('Banquet Detail', {
 		//let row = locals[cdt][cdn];
 		let row = frappe.get_doc(cdt, cdn);
 		if (row.type == 'Item' && row.linked_doc) {
-			//let item = frappe.db.get_doc('Item', row.linked_doc);
-			frappe.db.get_value('Item', row.linked_doc, 'stock_uom')
+			frappe.db.get_value('Item', row.linked_doc, ['item_name', 'description', 'stock_uom'])
 				.then(r => {
 					//console.log(r.message.status) // Open
-					frappe.model.set_value(cdt, cdn, 'uom', r.message.stock_uom);
+					frappe.model.set_value(cdt, cdn, {
+						title: r.message.item_name,
+						description: r.message.description,
+						uom: r.message.stock_uom
+					});
 				})
-			//let item = frappe.db.get_value('Item', row.linked_doc, 'stock_uom');
-			//frappe.model.set_value(cdt, cdn, 'uom', item.stock_uom);
+		} else if (row.type == 'Restaurant Reservation' && row.linked_doc) {
+			frappe.db.get_value('Restaurant Reservation', row.linked_doc, ['name', 'start_time', 'end_time', 'no_of_people'])
+				.then(r => {
+					//console.log(r.message.status) // Open
+					frappe.model.set_value(cdt, cdn, {
+						title: __('Restaurant Reservation'), //r.message.name,
+						start_time: r.message.start_time,
+						end_time: r.message.end_time,
+						qty: r.message.no_of_people
+					});
+				})
 		}
 	}
 });
